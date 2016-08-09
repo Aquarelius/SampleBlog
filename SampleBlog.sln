@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleBlog", "SampleBlog\SampleBlog.csproj", "{256491C5-0EDF-459D-B8DF-E1727CA76729}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleBlog.DAL", "..\SampleBlog.DAL\SampleBlog.DAL.csproj", "{F24D1C94-7B53-46A2-A302-E813D8509580}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleBlog.DAL", "SampleBlog.DAL\SampleBlog.DAL.csproj", "{F24D1C94-7B53-46A2-A302-E813D8509580}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleBlog.BLL", "SampleBlog.BLL\SampleBlog.BLL.csproj", "{8ED93E8F-591F-4D99-A846-C1BCB3ACC63D}"
 EndProject
