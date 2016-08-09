@@ -1,0 +1,71 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+h4 {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+/* styles for validation helpers */
+.field-validation-error {
+    color: #b94a48;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+input.input-validation-error {
+    border: 1px solid #b94a48;
+}
+
+input[type="checkbox"].input-validation-error {
+    border: 0 none;
+}
+
+.validation-summary-errors {
+    color: #b94a48;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.post-info {
+    color: #999;
+    font-size: 12pt;
+}
+
+.dv-container {
+    text-align: center;
+    border: solid #d3d3d3 1px;
+    font-family: "Georgia";
+    background-color: #f0f0f0;
+}
+
+.dv-year {
+    font-size: 10pt;
+}
+
+.dv-day {
+    font-size: 32pt;
+}
+
+.dv-month {
+    font-size: 16pt;
+}

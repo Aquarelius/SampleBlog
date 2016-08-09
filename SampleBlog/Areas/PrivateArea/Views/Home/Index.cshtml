@@ -1,0 +1,19 @@
+﻿@model SB.Areas.PrivateArea.Models.DashboardViewModel
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/PrivateArea/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<a href='@Url.RouteUrl("PrivateArea_create")'>
+    <span class='glyphicon glyphicon-plus-sign' style="margin-right: 10px;"></span>New post
+</a>
+@foreach (var post in Model.Posts)
+{
+    <div>
+        @post.Title
+        <a href='@Url.RouteUrl("PrivateArea_edit", new {id = post.Id})'>Edit</a>
+        <a href='@Url.RouteUrl("PrivateArea_delete", new { id = post.Id })'>Delete</a>
+    </div>
+}

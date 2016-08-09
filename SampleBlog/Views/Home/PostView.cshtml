@@ -1,0 +1,55 @@
+﻿@using Microsoft.AspNet.Identity
+@model SB.DAL.Entities.BlogPost
+@{
+    ViewBag.Title = "PostView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userId = "";
+    var isAdmin = false;
+    if (HttpContext.Current.User.Identity.IsAuthenticated)
+    {
+        userId = HttpContext.Current.User.Identity.GetUserId();
+        isAdmin = HttpContext.Current.User.IsInRole("Admin");
+    }
+}
+@section Scripts{
+    <script type="text/ng-template" id="comment_renderer">
+        <a href="{{c.AuthorId}}">{{c.Author}}</a>
+        <span style="margin-left:3px; margin-right:10px;" class="glyphicon glyphicon-triangle-right"></span>
+        <span>{{c.Text}}</span>
+        <span><a ng-show="showControl==c.Id && userId.length >0" href="#" ng-click="reply(c)">Reply</a></span>
+        <span ng-show="(c.AuthorId==userId || isAdmin) && showControl==c.Id"><a href="#" ng-click="delete(c.Id)">Delete</a></span>
+        <div style="padding-left:20px;" ng-repeat="c in c.Comments" ng-include="'comment_renderer'" ng-mouseenter="showControl=c.Id" ng-mouseleave="showControl=0"></div>
+    </script>
+
+}
+
+
+<h2>@Model.Title</h2>
+
+<div>
+    @Model.Text
+</div>
+
+<div class="well">
+    @foreach (var tag in Model.Tags)
+    {
+        <div class="pull-left" style="margin-right: 10px;">
+            <span class="glyphicon glyphicon-tag"></span>
+            @tag.Label
+        </div>
+    }
+</div>
+<div ng-controller="commentsController" ng-init="init('@Model.Id','@userId',@isAdmin.ToString().ToLower())">
+    <div ng-repeat="c in comments" ng-include="'comment_renderer'" ng-mouseenter="showControl=c.Id" ng-mouseleave="showControl=0"></div>
+
+
+    <div ng-show="userId.length >0">
+        <div ng-show="parentComment != null">
+            Reply to: {{parentComment.Author}}
+            <span class="glyphicon glyphicon-remove" style="cursor: pointer;" ng-click="parentComment=null"></span>
+        </div>
+        <input type="text" ng-model="message" class="form-control" />
+        <button ng-click="write(message)" class="btn btn-success">Send</button>
+
+    </div>
+</div>

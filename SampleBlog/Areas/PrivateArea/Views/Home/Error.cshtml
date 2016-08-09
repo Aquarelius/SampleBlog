@@ -1,0 +1,14 @@
+﻿@using SB.Helpers.Exceptions
+
+@{
+    ViewBag.Title = "Error";
+    Layout = "~/Areas/PrivateArea/Views/Shared/_Layout.cshtml";
+    var ex = (PostEditException) ((HandleErrorInfo) ViewData.Model).Exception;
+}
+
+<h2>Error</h2>
+
+<div>
+    
+    @ex.ErrorMessage
+</div>

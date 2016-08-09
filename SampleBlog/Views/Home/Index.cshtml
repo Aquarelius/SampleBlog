@@ -1,0 +1,13 @@
+﻿@using SB.Helpers
+@model SB.Models.PostsListViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container-fluid">
+    @foreach (var post in Model.Posts)
+    {
+        @Html.Partial("PostListItemPartial", post)
+    }
+
+</div>

@@ -1,0 +1,14 @@
+﻿@model SB.Models.PostsListViewModel
+@{
+    ViewBag.Title = "All posts with tag " + ViewData["Tag"];
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewData["Tag"]</h2>
+<hr />
+<div class="container-fluid">
+    @foreach (var post in Model.Posts)
+    {
+        @Html.Partial("PostListItemPartial", post)
+    }
+</div>

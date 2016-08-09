@@ -1,0 +1,23 @@
+﻿@model SB.Areas.PrivateArea.Models.EditPostViewModel
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Areas/PrivateArea/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.Id)
+
+    @Html.LabelFor(m => m.Title)
+    @Html.TextBoxFor(m => m.Title)
+    @Html.ValidationMessageFor(m=>m.Title)
+    
+    @Html.LabelFor(m => m.Text)
+    @Html.TextBoxFor(m => m.Text)
+    @Html.ValidationMessageFor(m=>m.Text)
+    
+    <input type="submit" value="Save"/>
+    
+}
