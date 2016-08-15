@@ -7,6 +7,8 @@ namespace SB.DAL.Repositories
         IEnumerable<T> List { get; }
         void Add(T entity);
         void Delete(T entity);
+
+        void Delete(ICollection<T> entities);
         void Update(T entity);
         T FindById(object id);
     }

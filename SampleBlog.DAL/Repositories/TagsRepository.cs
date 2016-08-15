@@ -47,5 +47,14 @@ namespace SB.DAL.Repositories
             var key = (int) id;
             return _context.Tags.FirstOrDefault(t => t.Id == key);
         }
+
+
+        public void Delete(ICollection<Tag> entities)
+        {
+            foreach (var tag in entities)
+            {
+                _context.Tags.Remove(tag);
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ namespace SB.DAL.Repositories
         private TagsRepository _tagsRepo;
         private CommentsRepository _commentsRepo;
         private UsersRepositry _usersRepositry;
+        private RolesRepository _rolesRepository;
         public UnitOfWork(IDataSource context) //DI
         {
             _context = context;
@@ -35,6 +36,12 @@ namespace SB.DAL.Repositories
         {
             get { return _usersRepositry ?? (_usersRepositry = new UsersRepositry(_context)); }
         }
+
+        public RolesRepository RolesRepository
+        {
+            get { return _rolesRepository ?? (_rolesRepository = new RolesRepository(_context)); }
+        }
+
         public void Save()
         {
             _context.Save();

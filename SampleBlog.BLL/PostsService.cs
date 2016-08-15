@@ -23,9 +23,19 @@ namespace SB.BLL
                 .ToList();
         }
 
-        public List<BlogPost> GetPostsForUserDashboard(string userId)
+        public int GetTotalPostsCount()
         {
-            return _unitOfWork.PostsRepository.GetPostsForAuthor(userId, true).ToList();
+            return _unitOfWork.PostsRepository.List.Count(p => !p.IsDraft);
+        }
+
+        public List<BlogPost> GetPostsForUserDashboard(string userId, int page, int pageSize, out int total)
+        {
+
+            total = _unitOfWork.PostsRepository.List.Count(p => p.Author.Id == userId);
+            return _unitOfWork.PostsRepository.GetPostsForAuthor(userId, true)
+                .Skip((page-1) * pageSize)
+                .Take(pageSize)
+                .ToList();
         }
 
         public BlogPost GetPost(int id)
@@ -69,6 +79,7 @@ namespace SB.BLL
             var res = false;
             try
             {
+                _unitOfWork.CommentsRepository.Delete(enity.Comments);
                 _unitOfWork.PostsRepository.Delete(enity);
                 res = true;
             }

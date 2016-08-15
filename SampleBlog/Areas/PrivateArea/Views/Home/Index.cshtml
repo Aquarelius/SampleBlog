@@ -1,19 +1,77 @@
-﻿@model SB.Areas.PrivateArea.Models.DashboardViewModel
+﻿@using SB.Helpers
+@model SB.Areas.PrivateArea.Models.DashboardViewModel
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/PrivateArea/Views/Shared/_Layout.cshtml";
 }
+<section layout="column">
 
-<h2>Index</h2>
 
-<a href='@Url.RouteUrl("PrivateArea_create")'>
-    <span class='glyphicon glyphicon-plus-sign' style="margin-right: 10px;"></span>New post
-</a>
-@foreach (var post in Model.Posts)
+    <section style="position: relative;">
+        <h2>My posts</h2>
+        <md-button class="md-fab md-primary md-fab-top-right" href='@Url.RouteUrl("PrivateArea_create")'>
+            <h2>+</h2>
+        </md-button>
+    </section>
+
+
+    <section ng-controller="myPostsList">
+        <md-list flex>
+            @foreach (var post in Model.Posts)
+            {
+                <md-list-item class="post-card-item">
+                    <section layout="column" flex>
+                        <h4> @post.Title</h4>
+                        <div class="date">@post.Updated.ToString("f")</div>
+                        <div class="text">@TextHelper.TruncText(TextHelper.StripHtml(@post.Text))</div>
+
+                        <section layout="row" layout-align="end center">
+                            @if (post.IsDraft)
+                            {
+                                <md-button href='@Url.RouteUrl("PrivateArea_publish", new {id = post.Id})'>Publish</md-button>
+                            }
+                            else
+                            {
+                                <md-button href='@Url.RouteUrl("PrivateArea_draft", new {id = post.Id})'>Set as Draft</md-button>
+                            }
+                            <md-button href='@Url.RouteUrl("PrivateArea_edit", new {id = post.Id})'>Edit</md-button>
+                            <md-button ng-click="delete('@Url.RouteUrl("PrivateArea_delete", new {id = post.Id})'); ">Delete</md-button>
+                        </section>
+                    </section>
+                </md-list-item>
+            }
+        </md-list>
+        @*Paging*@
+        @if (Model.PagesCount > 1)
+        {
+            <section layout="row" layout-align="center center">
+                @for (int i = 1; i <= Model.PagesCount; i++)
+                {
+                    <md-button href='@Url.RouteUrl("PrivateArea_home", new {page = i})' class='md-fab @(i == Model.Page ? "md-primary" : "")'>@i</md-button>
+                }
+            </section>
+        }
+        @*End Paging*@
+    </section>
+</section>
+@section comments
 {
-    <div>
-        @post.Title
-        <a href='@Url.RouteUrl("PrivateArea_edit", new {id = post.Id})'>Edit</a>
-        <a href='@Url.RouteUrl("PrivateArea_delete", new { id = post.Id })'>Delete</a>
-    </div>
+    <md-header md-colors="{background:'primary'}" >
+        <h1 class="md-toolbar-tools">
+            Latest comments
+        </h1>
+    </md-header>
+    <md-list>
+        @foreach (var c in Model.LatestComments)
+        {
+            <md-list-item layout="column" style="margin-bottom: 10px;">
+                <div class="comment-date">@c.Added</div>
+                <div class="comment-text">
+                    <a href='@Url.RouteUrl("PostView",new {id=c.Post.Id})'>
+                        <b>@c.Author.UserName</b> > @c.Text
+                    </a>
+                </div>
+            </md-list-item>
+        }
+    </md-list>
 }

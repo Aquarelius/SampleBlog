@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Routing;
 
 namespace SampleBlog
@@ -31,15 +27,15 @@ namespace SampleBlog
 
             routes.MapRoute(
                     "AuthorList",
-                    "Author/{authorId}",
-                    new { controller = "Home", action = "AuthorList" },
+                    "Author/{authorId}/{page}",
+                    new { controller = "Home", action = "AuthorList", page = UrlParameter.Optional },
                   new[] { "SB.Controllers" }
                );
 
             routes.MapRoute(
                    "TagList",
-                   "Tag/{id}",
-                   new { controller = "Home", action = "TagList" },
+                   "Tag/{id}/{page}",
+                   new { controller = "Home", action = "TagList", page = UrlParameter.Optional },
                  new[] { "SB.Controllers" }
               );
 

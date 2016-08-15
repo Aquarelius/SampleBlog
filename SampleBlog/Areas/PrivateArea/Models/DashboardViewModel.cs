@@ -11,5 +11,9 @@ namespace SB.Areas.PrivateArea.Models
         public List<BlogPost> Posts { get; set; }
 
         public List<Comment> LatestComments { get; set; }
+
+        public int PagesCount { get; set; }
+
+        public int Page { get; set; }
     }
 }

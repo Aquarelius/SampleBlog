@@ -2,22 +2,42 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/PrivateArea/Views/Shared/_Layout.cshtml";
+    
 }
 
 <h2>Edit</h2>
+<section ng-controller="editor" layout="column" ng-init="init(@Model.Tags)">
+    @using (Html.BeginForm())
+    {
+        @Html.HiddenFor(model => model.Id)
+        <md-input-container flex>
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title)
+            @Html.ValidationMessageFor(m => m.Title)
+        </md-input-container>
+        <section>
+            @Html.TextAreaFor(m => m.Text, new { id = "tbEdit" })
+        </section>
+        <md-content layout-padding>
+            @Html.LabelFor(model=>model.Tags)
+            <md-chips ng-model="tags">
+                <md-autocomplete md-selected-item="suggest"
+                                 md-search-text="searchText"
+                                 md-items="item in querySearch(searchText)"
+                                 placeholder="Select or type tag">
+                    <span md-highlight-text="ctrl.searchText">{{item}} </span>
+                </md-autocomplete>
+            </md-chips>
+            <input type="hidden" value="{{tags}}" name="Tags" />
+        </md-content>
 
-@using (Html.BeginForm())
-{
-    @Html.HiddenFor(model => model.Id)
 
-    @Html.LabelFor(m => m.Title)
-    @Html.TextBoxFor(m => m.Title)
-    @Html.ValidationMessageFor(m=>m.Title)
-    
-    @Html.LabelFor(m => m.Text)
-    @Html.TextBoxFor(m => m.Text)
-    @Html.ValidationMessageFor(m=>m.Text)
-    
-    <input type="submit" value="Save"/>
-    
-}
+
+        <section layout="row" layout-align="center center" layout-margin>
+            <md-button type="submit">Save</md-button>
+            <md-button href="@Url.Action("Index")">Cancel</md-button>
+        </section>
+
+
+    }
+</section>

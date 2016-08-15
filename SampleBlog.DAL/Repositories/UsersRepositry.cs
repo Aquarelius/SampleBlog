@@ -42,5 +42,14 @@ namespace SB.DAL.Repositories
             var key = (string) id;
             return _context.Users.FirstOrDefault(u => u.Id == key);
         }
+
+
+        public void Delete(ICollection<ApplicationUser> entities)
+        {
+            foreach (var user in entities)
+            {
+                _context.Users.Remove(user);
+            }
+        }
     }
 }

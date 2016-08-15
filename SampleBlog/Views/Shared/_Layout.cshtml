@@ -1,70 +1,66 @@
-﻿<!DOCTYPE html>
+﻿@using Ninject
+@using SB.App_Start
+@using SB.BLL
+<!DOCTYPE html>
+@{
+    var tagService = NinjectWebCommon.bootstrapper.Kernel.Get<TagsService>();
+}
 <html ng-app="blogApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Sample Blog</title>
-    @*<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>*@
-
-    <!-- Angular Material Library -->
-    @*<script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>*@
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/angular")
-    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/blog")
-   
     @RenderSection("scripts", required: false)
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Sample blog", "Index", "Home", null, new { @class = "navbar-brand" })
+<body layout="column" >
+    <header>
+        <md-toolbar ng-controller="navMenu as ctrl" ng-cloak>
+            <div class="md-toolbar-tools">
+                <i class="material-icons" layout-margin>menu</i>
+                <h2 flex>
+                    <a href='@Url.Action("Index", "Home", new { area = "" })'>Simple blog</a>
+                </h2>
+                <section>
+                    @Html.Partial("_LoginPartial")
+                </section>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-    <div class="body-content" style="margin-top: 30px;">
-        <div class="container">
-            <div class="col-md-8 col-lg-8 col-sm-8 col-xs-8">
-                @RenderBody()
-            </div>
-            <div class="col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 col-md-3 col-lg-3 col-sm-3 col-xs-3">
-                <h2>About</h2>
-            </div>
-            <div ng-controller="navMenu as ctrl" ng-cloak>
-                    <md-menu>
-                        <md-button class="btn btn-primary" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
-                            Click
-                        </md-button>
-                        <md-menu-content width="2">
-                            <md-menu-item ng-repeat="item in [1, 2, 3]">
-                                <md-button ng-click="ctrl.announceClick($index)"> <span md-menu-align-target>Option</span> {{item}} </md-button>
-                            </md-menu-item>
-                        </md-menu-content>
-                    </md-menu>
-                </div>
-        </div>
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Sample blog</p>
-        </footer>
-    </div>
+        </md-toolbar>
+    </header>
 
 
+    <md-content layout="row" layout-fill>
+        <section layout-margin flex>
+            @RenderBody()
+        </section>
+        <section nd-controller="rightPane">
+            <md-sidenav class="md-sidenav-right"
+                        md-component-id="right"
+                        md-is-locked-open="$mdMedia('gt-md')"
+                        md-whiteframe="4">
+                <md-toolbar>
+                    <h1 class="md-toolbar-tools">Tags</h1>
+                </md-toolbar>
+                <section layout-padding layout="column">
+                    @foreach (var tag in tagService.GetTopTags())
+                    {
+                        @Html.RouteLink(tag.Label, "TagList", new { id = tag.Id })
+                    }
+                </section>
+            </md-sidenav>
+        </section>
+    </md-content>
+
+
+
+    <footer ng-controller="footer" md-colors="::{background:'primary'}">
+        <section style="padding: 20px;" layout="row" layout-align="center center">
+            &copy; @DateTime.Now.Year - Sample blog
+        </section>
+
+    </footer>
 </body>
 </html>

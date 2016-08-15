@@ -1,43 +1,54 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="blogApp">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - Sample Blog</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/blog")
+    @Scripts.Render("~/bundles/tinymce")
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </head>
-<body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Sample blog", "Index", "Home", null, new { @class = "navbar-brand" })
+<body layout="column">
+    <header>
+        <md-toolbar ng-controller="navMenu as ctrl" ng-cloak>
+            <div class="md-toolbar-tools">
+                <i class="material-icons" layout-margin>menu</i>
+                <h2 flex>
+                    <a href='@Url.Action("Index", "Home", new { area = "" })'>Simple blog</a>
+                </h2>
+                <section>
+                    @Html.Partial("_LoginPartial")
+                </section>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "PrivateHome")</li>
-                    <li>@Html.ActionLink("Edit", "Edit", "PrivateHome")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+        </md-toolbar>
+    </header>
+
+
+    <md-content layout="row" flex="grow">
+
+        <section layout-margin layout="column">
+            @RenderBody()
+        </section>
+        <section nd-controller="rightPane">
+            <md-sidenav class="md-sidenav-right"
+                        md-component-id="right"
+                        md-is-locked-open="$mdMedia('gt-md')"
+                        md-whiteframe="4">
+                @RenderSection("comments", false)
+            </md-sidenav>
+        </section>
+    </md-content>
+
+    <footer ng-controller="footer" md-colors="::{background:'primary'}">
+        <section style="padding: 20px;" layout="row" layout-align="center center">
+            &copy; @DateTime.Now.Year - Sample blog
+        </section>
+
+    </footer>
 
 </body>
 </html>

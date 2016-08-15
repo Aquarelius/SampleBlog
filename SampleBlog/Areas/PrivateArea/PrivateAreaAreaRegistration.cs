@@ -14,13 +14,25 @@ namespace SB.Areas.PrivateArea
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-
             context.MapRoute(
                "PrivateArea_edit",
                "PrivateArea/Edit/{id}",
                new { controller = "Home", action = "Edit" },
                new[] { "SB.Areas.PrivateArea.Controllers" }
+           );
 
+            context.MapRoute(
+               "PrivateArea_publish",
+               "PrivateArea/Edit/{id}/publish",
+               new { controller = "Home", action = "Publish", isDraft = false },
+               new[] { "SB.Areas.PrivateArea.Controllers" }
+           );
+
+            context.MapRoute(
+               "PrivateArea_draft",
+               "PrivateArea/Edit/{id}/draft",
+               new { controller = "Home", action = "Publish", isDraft = true },
+               new[] { "SB.Areas.PrivateArea.Controllers" }
            );
 
             context.MapRoute(
@@ -36,6 +48,13 @@ namespace SB.Areas.PrivateArea
             new { controller = "Home", action = "Delete" },
             new[] { "SB.Areas.PrivateArea.Controllers" }
 
+        );
+
+            context.MapRoute(
+            "PrivateArea_home",
+            "PrivateArea/{page}",
+            new { controller = "Home", action = "Index", page = UrlParameter.Optional },
+           new[] { "SB.Areas.PrivateArea.Controllers" }
         );
 
             context.MapRoute(

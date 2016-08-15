@@ -63,7 +63,7 @@
     <Compile Include="UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SampleBlog.DAL\SampleBlog.DAL.csproj">
+    <ProjectReference Include="..\SampleBlog.DAL\SampleBlog.DAL.csproj">
       <Project>{f24d1c94-7b53-46a2-a302-e813d8509580}</Project>
       <Name>SampleBlog.DAL</Name>
     </ProjectReference>

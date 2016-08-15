@@ -16,9 +16,26 @@ textarea {
     max-width: 280px;
 }
 
+a {
+    color: darkgray;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+}
+
 h4 {
     margin-top: 3px;
     margin-bottom: 3px;
+}
+
+table {
+    border-spacing: 0 0;
 }
 
 /* styles for validation helpers */
@@ -56,6 +73,7 @@ input[type="checkbox"].input-validation-error {
     border: solid #d3d3d3 1px;
     font-family: "Georgia";
     background-color: #f0f0f0;
+    min-width: 100px;
 }
 
 .dv-year {
@@ -69,3 +87,57 @@ input[type="checkbox"].input-validation-error {
 .dv-month {
     font-size: 16pt;
 }
+
+.main-text {
+    border: 1px solid #d3d3d3;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.post-card-item {
+    margin-bottom: 10px;
+    border-bottom: solid 1px #d0d0d0;
+}
+
+.post-card-item h4{
+    font-weight: 100;
+    font-size: 24pt;
+}
+
+    .post-card-item .date {
+        color: #999999;
+        font-size: 10pt;
+    }
+    .post-card-item .text {
+        margin: 10px;
+    }
+    .even-row {
+        background-color: #f3f3f3;
+    }
+    .odd-row {
+        background-color: white;
+    }
+
+    .post-list-item {
+        border-bottom: #d3d3d3 1px solid;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+    }
+    .comment-date {
+        font-size: 8pt;
+        color: #d3d3d3;
+    }
+    .comment-text {
+        font-size: 10pt;
+    }
+
+     .css-form input.ng-invalid.ng-touched {
+    background-color: #FA787E;
+  }
+
+  .css-form input.ng-valid.ng-touched {
+    background-color: #78FA89;
+  }

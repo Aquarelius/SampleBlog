@@ -49,8 +49,7 @@ namespace SB.BLL
             var comment = _unitOfWork.CommentsRepository.FindById(id);
             if (comment != null)
             {
-                var lst =new List<Comment>();
-                lst.Add(comment);
+                var lst = new List<Comment> {comment};
                 lst.AddRange(GetChilds(comment));
                 _unitOfWork.CommentsRepository.Delete(lst);
                 res = lst.Select(c => c.Id).ToList();

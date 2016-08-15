@@ -11,4 +11,17 @@
     {
         @Html.Partial("PostListItemPartial", post)
     }
+
+    @*Paging*@
+    @if (Model.PagesCount > 1)
+    {
+        <section layout="row" layout-align="center center">
+            @for (int i = 1; i <= Model.PagesCount; i++)
+            {
+                <md-button href='@Url.RouteUrl("TagList", new { id = ViewData["TagId"], page = i })' class='@(i == Model.Page ? "md-primary" : "")'>@i</md-button>
+            }
+        </section>
+    }
+
+    @*End Paging*@
 </div>

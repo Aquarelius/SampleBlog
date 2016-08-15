@@ -1,5 +1,5 @@
 ﻿var commentsApp = angular.module('BlogApp.Comments', []);
-commentsApp.controller('commentsController', function ($scope, $http) {
+commentsApp.controller('commentsController', function ($scope, $http, $mdDialog) {
     $scope.comments = [];
     $scope.parentCommentId = null;
     $scope.init = function (postId, userId, isAdmin) {
@@ -10,7 +10,7 @@ commentsApp.controller('commentsController', function ($scope, $http) {
         $http({
             method: 'GET',
             url: '/api/post/' + $scope.postId + "/comments"
-        }).then(function successCallback(response) {
+        }).then(function (response) {
             $scope.comments = [];
             //Sort comments
             for (var i in response.data) {
@@ -23,15 +23,16 @@ commentsApp.controller('commentsController', function ($scope, $http) {
             }
         });
     };
-    $scope.write = function (message) {
+    $scope.write = function () {
         var parentCommentId = null;
         if ($scope.parentComment != null) parentCommentId = $scope.parentComment.Id;
+       
         $http({
             method: 'POST',
             url: '/api/comments',
             data: {
                 PostId: $scope.postId,
-                Text: message,
+                Text: $scope.message,
                 ParentCommentId: parentCommentId
             }
         }).then(function (response) {
@@ -47,14 +48,24 @@ commentsApp.controller('commentsController', function ($scope, $http) {
     };
 
     $scope.delete = function (id) {
-        $http({
-            method: 'DELETE',
-            url: '/api/comments/' + id
-        }).then(function (response) {
-            for (var i in response.data) {
-                tools.deleteInChilds(response.data[i], $scope.comments);
-            }
+        var confirm = $mdDialog.confirm()
+        .title('Delete Comment')
+        .textContent('Do you realy want to delete this comment?')
+        .ariaLabel('Delete Comment')
+        .ok('Delete')
+        .cancel('Cancel');
+
+        $mdDialog.show(confirm).then(function () {
+            $http({
+                method: 'DELETE',
+                url: '/api/comments/' + id
+            }).then(function (response) {
+                for (var i in response.data) {
+                    tools.deleteInChilds(response.data[i], $scope.comments);
+                }
+            });
         });
+
     }
 
     $scope.reply = function (comment) {
@@ -82,7 +93,7 @@ var tools = {
         }
         return null;
     },
-    deleteInChilds: function(id, collection) {
+    deleteInChilds: function (id, collection) {
         for (var i in collection) {
             if (collection[i].Id == id) {
                 collection.splice(i, 1);

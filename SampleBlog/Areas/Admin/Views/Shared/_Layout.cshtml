@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html ng-app="blogApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Sample Blog</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/blog")
+    @Scripts.Render("~/bundles/tinymce")
+
+    @RenderSection("scripts", required: false)
+</head>
+<body layout="column" layout-fill>
+    <section ng-controller="navMenu as ctrl" ng-cloak>
+        <md-content>
+            <md-toolbar>
+                <div class="md-toolbar-tools">
+                    <i class="material-icons" layout-margin>menu</i>
+                    <h2 flex><a href='@Url.Action("Index", "Home", new { area = "" })'>Simple blog</a></h2>
+                    <section>
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                </div>
+            </md-toolbar>
+        </md-content>
+    </section>
+
+
+    <md-content layout="row" flex>
+
+        <section flex layout-margin>
+            @RenderBody()
+        </section>
+        <section nd-controller="rightPane">
+            <md-sidenav class="md-sidenav-right"
+                        md-component-id="right"
+                        md-is-locked-open="$mdMedia('gt-md')"
+                        md-whiteframe="4">
+                <md-toolbar class="md-theme-indigo">
+                    <h1 class="md-toolbar-tools">Users admin
+                    </h1>
+                </md-toolbar>
+                <section layout-padding>
+                    You can't delete admin
+                </section>
+            </md-sidenav>
+        </section>
+    </md-content>
+
+    <section ng-controller="footer" flex="nogrow">
+        <md-content layout-fill>
+            <md-toolbar layout-align="center center">
+                &copy; @DateTime.Now.Year - Sample blog
+            </md-toolbar>
+        </md-content>
+    </section>
+
+
+
+</body>
+</html>

@@ -3,11 +3,24 @@
 @{
     ViewBag.Title = "Home Page";
 }
-
-<div class="container-fluid">
-    @foreach (var post in Model.Posts)
+<section ng-cloak>
+    <md-list flex>
+        @foreach (var post in Model.Posts)
+        {
+            @Html.Partial("PostListItemPartial", post)
+        }
+    </md-list>
+    @*Paging*@
+    @if (Model.PagesCount > 1)
     {
-        @Html.Partial("PostListItemPartial", post)
+        <section layout="row" layout-align="center center">
+            @for (int i = 1; i <= Model.PagesCount; i++)
+            {
+                <md-button href='@Url.RouteUrl("PublicList",new {page=i})' class='md-fab @(i == Model.Page ? "md-primary" : "")'>@i</md-button>
+            }
+        </section>
     }
+    @*End Paging*@
+</section>
 
-</div>
+

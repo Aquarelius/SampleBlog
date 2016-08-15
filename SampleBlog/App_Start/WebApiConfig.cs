@@ -15,6 +15,12 @@ namespace SampleBlog
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
+            name: "tags_autocomplete",
+           routeTemplate: "api/Tags/{text}",
+           defaults: new { controller = "Tags", action = "TagsAutocomplete", text = RouteParameter.Optional }
+       );
+
+            config.Routes.MapHttpRoute(
                name: "comments_for_post",
                routeTemplate: "api/post/{postId}/comments",
                defaults: new { controller = "Comments", action = "GetForPost" }

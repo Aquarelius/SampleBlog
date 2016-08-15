@@ -1,22 +1,47 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account",new {area=""}, FormMethod.Post, new { id = "logoutForm"}))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
+        <section layout="row">
+            
+            <md-menu layot-align="center center">
+                <md-button aria-label="More" ng-click="ctrl.openMenu($mdOpenMenu, $event)">
+                    @User.Identity.GetUserName()
+                    <i class="material-icons">more_vert</i>
+                </md-button>
+                <md-menu-content width="2">
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <md-menu-item>
+                            <md-button href='@Url.Action("Index", "Home", new {Area = "Admin"})'>Users</md-button>
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+                        </md-menu-item>
+                    }
+                    @if (User.IsInRole("Writer"))
+                    {
+                        <md-menu-item>
+                            <md-button href='@Url.Action("Index", "Home", new {Area = "PrivateArea"})'>My Posts</md-button>
+
+                        </md-menu-item>
+                    }
+
+                    <md-menu-item>
+                        <md-button href='@Url.Action("Manage", "Account")'>Account</md-button>
+
+                    </md-menu-item>
+                    <md-menu-item>
+                        <md-button ng-click="ctrl.logOff()">Log off</md-button>
+
+                    </md-menu-item>
+                </md-menu-content>
+            </md-menu>
+        </section>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+    <md-button href="@Url.Action("Register","Account")">Register</md-button>
+    <md-button href="@Url.Action("Login","Account")">Log in</md-button>
 }

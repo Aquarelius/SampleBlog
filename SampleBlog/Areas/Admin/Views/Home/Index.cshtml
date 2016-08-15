@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Users</h2>
+
+<section ng-controller="usersController" ng-init="init()" layout="column">
+    <section layout="row" md-colors="::{background:'primary'}">
+        <div layout-padding flex="50">Name</div>
+        <div layout-padding flex="10">Admin</div>
+        <div layout-padding flex="10">Writer</div>
+        <div layout-padding></div>
+    </section>
+
+    <section layout="row"
+             ng-repeat="user in users"
+             ng-class-odd="'odd-row'" 
+             ng-class-even="'even-row'">
+        <div ng-bind="user.Name"
+             flex="50"
+             layout="row"
+             layout-align="start center">
+          </div>
+        <div layout="row"
+             layout-align="center center"
+             flex="10">
+            <md-checkbox aria-label="Admin"
+                         ng-model="user.Admin"
+                         ng-change="saveRole('Admin',user.Id)">
+            </md-checkbox>
+        </div>
+        <div layout="row"
+             layout-align="center center"
+             flex="10">
+            <md-checkbox aria-label="Writer"
+                         ng-change="saveRole('Writer',user.Id)"
+                         ng-model="user.Writer">
+            </md-checkbox>
+        </div>
+        <div layout="row"
+             layout-align="center center">
+            <md-button ng-click="delete(user.Id)"
+                       ng-show="!user.Admin">DELETE</md-button>
+        </div>
+    </section>
+   
+</section>
+

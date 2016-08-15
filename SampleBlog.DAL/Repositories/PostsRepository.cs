@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using SB.DAL.Entities;
 
@@ -19,6 +20,7 @@ namespace SB.DAL.Repositories
             {
                 return _context.Posts
                     .Where(p => !p.IsDraft)
+                    .Include(p=>p.Author)
                     .OrderByDescending(p => p.Updated);
             }
         }
@@ -51,6 +53,15 @@ namespace SB.DAL.Repositories
         {
             var key = (int)id;
             return _context.Posts.FirstOrDefault(p => p.Id == key);
+        }
+
+
+        public void Delete(ICollection<BlogPost> entities)
+        {
+            foreach (var post in entities)
+            {
+                _context.Posts.Remove(post);
+            }
         }
     }
 }

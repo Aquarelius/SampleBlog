@@ -1,31 +1,41 @@
 ﻿@using SB.Helpers
 @model SB.DAL.Entities.BlogPost
 
-<div class="row">
-    <div class="col-md-2">
+
+<md-list-item layout="row" layout-margins class="post-list-item">
+
+    <div flex="nogrow">
         @Html.Partial("DatePartial", Model.Updated)
     </div>
-    <div class="col-md-10">
+    <div flex layout="column" style="margin-left: 10px;">
 
-        <a href='@Url.RouteUrl("PostView", new { id = Model.Id })'>
-            <h2> @Model.Title</h2>
+        <a href='@Url.RouteUrl("PostView", new {id = Model.Id})'>
+            <h2 md-colors="{color:'primary-900'}"> @Model.Title</h2>
         </a>
-        <div class="container post-info">
-            <div class="col-md-6">
-                <a href='@Url.RouteUrl("AuthorList",new {authorId =Model.Author.Id})'>@Model.Author.UserName</a>
+        <div layout="row" style="font-size: 10pt;">
+            <div flex layout-align="start center">
+                <a href='@Url.RouteUrl("AuthorList", new {authorId = Model.Author.Id})'>@Model.Author.UserName</a>
             </div>
-            <div class="col-md-5 align-right">
-                <span class="glyphicon glyphicon-comment" style="margin-right: 5px;"></span>@Model.Comments.Count
+            <div flex="nogrow" layout-align="end center">
+                <span class="material-icons" style="font-size: 10pt; margin-right: 5px;">comment</span>@Model.Comments.Count
             </div>
         </div>
-        <div class="well">@TextHelper.TruncText(Model.Text)</div>
-        @foreach (var tag in Model.Tags)
-        {
-        <div class="pull-left" style="margin-right: 10px;">
-            <span class="glyphicon glyphicon-tag"></span>
-            <a href="@Url.RouteUrl("TagList", new{id=@tag.Id})">@tag.Label</a>
+        <div layout-padding layut-margin md-colors="{background:'primary-50'}">@TextHelper.TruncText(TextHelper.StripHtml(Model.Text))</div>
+        <div layout="row">
+            @foreach (var tag in Model.Tags)
+            {
+                <div layout-align="end center">
+                    <span class="material-icons">label</span>
+                </div>
+                <div style="margin-right: 10px;" layout-align="start center">
+
+                    <a href="@Url.RouteUrl("TagList", new {id = @tag.Id})">@tag.Label</a>
+                </div>
+            }
         </div>
-        }
     </div>
-</div>
+
+</md-list-item>
+
+
 
