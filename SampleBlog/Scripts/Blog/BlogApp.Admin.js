@@ -1,7 +1,7 @@
 ﻿var adminApp = angular.module('BlogApp.Admin', []);
 
 adminApp.controller("usersController", function ($scope, $http, $mdDialog) {
-	$scope.users = [{ "Name": "Hui" }];
+	$scope.users = [];
 	$scope.init = function () {
 		$http({
 			"method": "GET",

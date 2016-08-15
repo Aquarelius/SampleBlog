@@ -23,7 +23,7 @@ commentsApp.controller('commentsController', function ($scope, $http, $mdDialog)
             }
         });
     };
-    $scope.write = function () {
+    $scope.write = function (commentsForm) {
         var parentCommentId = null;
         if ($scope.parentComment != null) parentCommentId = $scope.parentComment.Id;
        
@@ -43,6 +43,8 @@ commentsApp.controller('commentsController', function ($scope, $http, $mdDialog)
                 $scope.parentComment.Comments.push(response.data);
             }
             $scope.message = "";
+            commentsForm.$setPristine();
+            commentsForm.$setUntouched();
             $scope.parentComment = null;
         });
     };

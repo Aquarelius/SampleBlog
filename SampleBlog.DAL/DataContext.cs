@@ -16,7 +16,9 @@ namespace SB.DAL
         {
             get
             {
-                Database.SetInitializer(new MigrateDatabaseToLatestVersion<DataContext, Configuration>());
+                var init = new MigrateDatabaseToLatestVersion<DataContext, Configuration>() ;
+                Database.SetInitializer(init);
+                
                 if (_instance == null) _instance = new DataContextFactory();
                 return _instance;
             }
@@ -36,8 +38,7 @@ namespace SB.DAL
         public IDbSet<Tag> Tags { get; set; }
         public IDbSet<Comment> Comments { get; set; }
 
-
-
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<BlogPost>()
@@ -58,12 +59,14 @@ namespace SB.DAL
             modelBuilder.Entity<BlogPost>()
                 .HasRequired<ApplicationUser>(p => p.Author)
                 .WithMany(u => u.Posts)
-                .Map(m => m.MapKey("AuthorId"));
+                .Map(m => m.MapKey("AuthorId"))
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Comment>()
                 .HasRequired<ApplicationUser>(c => c.Author)
                 .WithMany(u => u.Comments)
-                .Map(m => m.MapKey("AuthorId"));
+                .Map(m => m.MapKey("AuthorId"))
+                .WillCascadeOnDelete(false);
 
 
             base.OnModelCreating(modelBuilder);

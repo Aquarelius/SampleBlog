@@ -2,24 +2,30 @@
 @{
     ViewBag.Title = "Edit";
     Layout = "~/Areas/PrivateArea/Views/Shared/_Layout.cshtml";
-    
+
 }
 
-<h2>Edit</h2>
-<section ng-controller="editor" layout="column" ng-init="init(@Model.Tags)">
+<section ng-controller="editor" layout="column" ng-init="init(@Model.Tags)" flex="grow">
+    <h2>Edit</h2> 
     @using (Html.BeginForm())
     {
+        @Html.AntiForgeryToken()
         @Html.HiddenFor(model => model.Id)
         <md-input-container flex>
             @Html.LabelFor(m => m.Title)
             @Html.TextBoxFor(m => m.Title)
-            @Html.ValidationMessageFor(m => m.Title)
+            <div>
+                @Html.ValidationMessageFor(m => m.Title)
+            </div>
         </md-input-container>
         <section>
-            @Html.TextAreaFor(m => m.Text, new { id = "tbEdit" })
+            @Html.TextAreaFor(m => m.Text, new {id = "tbEdit"})
+            <div>
+                @Html.ValidationMessageFor(m => m.Text)
+            </div>
         </section>
         <md-content layout-padding>
-            @Html.LabelFor(model=>model.Tags)
+            @Html.LabelFor(model => model.Tags)
             <md-chips ng-model="tags">
                 <md-autocomplete md-selected-item="suggest"
                                  md-search-text="searchText"
@@ -28,7 +34,7 @@
                     <span md-highlight-text="ctrl.searchText">{{item}} </span>
                 </md-autocomplete>
             </md-chips>
-            <input type="hidden" value="{{tags}}" name="Tags" />
+            <input type="hidden" value="{{tags}}" name="Tags"/>
         </md-content>
 
 

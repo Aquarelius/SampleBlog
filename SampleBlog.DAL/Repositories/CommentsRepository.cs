@@ -43,9 +43,9 @@ namespace SB.DAL.Repositories
 
         public void Delete(ICollection<Comment> list)
         {
-            while (list.Count >0)
+            foreach (var comment in list)
             {
-                Delete(list.First());
+                Delete(comment);
             }
         }
 

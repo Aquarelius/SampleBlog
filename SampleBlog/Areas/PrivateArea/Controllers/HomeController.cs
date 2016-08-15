@@ -78,9 +78,10 @@ namespace SB.Areas.PrivateArea.Controllers
         [HttpPost]
         [HandleError(ExceptionType = typeof(PostEditException), View = "Error", Order = 1)]
         [PostGuardFilter(Order = 2)]
+        [ValidateAntiForgeryToken(Order = 3)]
         public ActionResult Edit(EditPostViewModel model)
         {
-            if (!ModelState.IsValid) return View();
+            if (!ModelState.IsValid) return View(model);
 
             var itm = _postService.GetPost(model.Id) ?? new BlogPost { Tags = new List<Tag>() };
             var user = _userService.GetUser(User.Identity.GetUserId());

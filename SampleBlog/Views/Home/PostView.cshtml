@@ -17,7 +17,7 @@
             <a layout-align="center center" href="{{c.AuthorId}}">{{c.Author}}</a>
             <i layout-align="center center" style="margin-left:3px; margin-right:10px;" class="material-icons">chevron_right</i>
             <span layout-align="center center">{{c.Text}}</span>
-            <span><a ng-show="showControl==c.Id && userId.length >0" href="#" ng-click="reply(c)">Reply</a></span>
+            <span style="margin-left:10px; margin-right:10px;"><a ng-show="showControl==c.Id && userId.length >0" href="#" ng-click="reply(c)">Reply</a></span>
             <span ng-show="(c.AuthorId==userId || isAdmin) && showControl==c.Id"><a href="#" ng-click="delete(c.Id)">Delete</a></span>
         </div>
         <div style="padding-left:20px;"
@@ -68,12 +68,13 @@
         </div>
 
         <section layout="row" flex ng-form="commentsForm">
-            <md-input-container class="md-block" md-no-float>
+            <md-input-container class="md-block" >
                 <label>Comment</label>
-                <input type="text" ng-model="message" requared />
+                <input type="text" ng-model="message" required flex/>
             </md-input-container>
 
-            <md-button ng-disabled="commentsForm.$invalid" ng-click="write()" md-colors="{background:'primary'}">Send</md-button>
+            <md-button ng-disabled="commentsForm.$invalid" ng-click="write(commentsForm)" >Send</md-button>
+     
         </section>
 
     </div>
